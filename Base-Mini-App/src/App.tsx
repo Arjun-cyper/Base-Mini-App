@@ -1,61 +1,67 @@
-import { useState } from 'react'
-import './App.css'
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useAccount } from 'wagmi';
 
 function App() {
-  const [walletConnected, setWalletConnected] = useState(false)
+  const { isConnected } = useAccount();
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white font-sans p-6 flex flex-col items-center">
-      {/* Header / Nav */}
-      <nav className="w-full max-w-2xl flex justify-between items-center mb-12">
-        <h1 className="text-2xl font-bold tracking-tighter text-blue-400">PokeMint</h1>
-        <button 
-          onClick={() => setWalletConnected(!walletConnected)}
-          className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-full font-medium transition-all"
-        >
-          {walletConnected ? "0x...4eth" : "Connect Wallet"}
-        </button>
-      </nav>
+    <div className="min-h-screen bg-[#050a1a] text-white flex flex-col items-center justify-center p-6 font-sans">
+      
+      {/* Background Decorative Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-64 bg-blue-600/20 blur-[120px] -z-10" />
 
-      {/* Main Content */}
-      <main className="w-full max-w-md bg-slate-800 rounded-3xl p-8 shadow-2xl border border-slate-700 text-center">
-        <div className="mb-6">
-           <div className="w-24 h-24 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-blue-500/30">
-             <span className="text-4xl">🔵</span>
-           </div>
-           <h2 className="text-3xl font-extrabold mb-2">Base Mini App</h2>
-           <p className="text-slate-400">Mint AI Exclusives & Battle in PokeFight</p>
+      <main className="w-full max-w-md bg-slate-900/50 backdrop-blur-xl border border-white/10 p-8 rounded-[2.5rem] shadow-2xl text-center">
+        
+        {/* NFT Preview Circle */}
+        <div className="relative w-32 h-32 mx-auto mb-8">
+          <div className="absolute inset-0 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-full animate-pulse" />
+          <div className="absolute inset-1 bg-slate-900 rounded-full flex items-center justify-center overflow-hidden">
+             {/* You can replace this with your pokemon024.gif */}
+             <span className="text-5xl">👾</span>
+          </div>
         </div>
 
-        {/* Action Grid */}
-        <div className="grid grid-cols-1 gap-4 mb-8">
-          <button className="w-full py-4 bg-slate-700 hover:bg-slate-600 rounded-2xl font-bold border border-slate-600 transition-colors">
-            🚀 Mint New Poke
-          </button>
-          <button className="w-full py-4 bg-slate-700 hover:bg-slate-600 rounded-2xl font-bold border border-slate-600 transition-colors text-slate-300">
-            ⚔️ PokeFight (Coming Soon)
-          </button>
+        <h1 className="text-4xl font-black mb-4 tracking-tight">
+          Poke<span className="text-blue-500">Mint</span>
+        </h1>
+        
+        <p className="text-slate-400 mb-10 leading-relaxed">
+          Connect your wallet to mint AI Exclusives, manage your collection, and prepare for <b>PokeFight</b>.
+        </p>
+
+        <div className="flex justify-center">
+          <ConnectButton label="Connect Wallet" showBalance={false} />
         </div>
 
-        {/* Stats Section */}
-        <div className="flex justify-around py-4 border-t border-slate-700">
+        {isConnected && (
+          <div className="mt-8 animate-bounce">
+            <button className="bg-white text-black font-bold py-3 px-8 rounded-full hover:bg-blue-400 hover:text-white transition-all">
+              Enter Dashboard →
+            </button>
+          </div>
+        )}
+
+        <div className="mt-12 grid grid-cols-3 gap-4 border-t border-white/5 pt-8 text-xs text-slate-500 uppercase tracking-widest">
           <div>
-            <p className="text-xs text-slate-500 uppercase">My Pokes</p>
-            <p className="text-xl font-bold">12</p>
+            <p className="font-bold text-white">Base</p>
+            Network
           </div>
           <div>
-            <p className="text-xs text-slate-500 uppercase">Rank</p>
-            <p className="text-xl font-bold">#42</p>
+            <p className="font-bold text-white">0.01 ETH</p>
+            Mint Price
+          </div>
+          <div>
+            <p className="font-bold text-white">PokeFight</p>
+            Ready
           </div>
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="mt-auto pt-10 text-slate-500 text-sm">
-        Built on <span className="text-blue-500 font-semibold">Base</span>
+      <footer className="mt-8 text-slate-600 text-sm">
+        Securely powered by <b>Coinbase</b> & <b>WalletConnect</b>
       </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
